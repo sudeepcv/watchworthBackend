@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: watchworth-backend
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -20,8 +21,17 @@ spec:
             - containerPort: 8080
           env:
             - name: DATASOURCE_URL
-              value: jdbc:h2:~/watchworth
+              valueFrom:
+                configMapKeyRef:
+                  name: watchworth-backend-config
+                  key: DATASOURCE_URL
             - name: DATASOURCE_USERNAME
-              value: sa
+              valueFrom:
+                configMapKeyRef:
+                  name: watchworth-backend-config
+                  key: DATASOURCE_USERNAME
             - name: DATASOURCE_PASSWORD
-              value: ""
+              valueFrom:
+                secretKeyRef:
+                  name: watchworth-backend-secret
+                  key: DATASOURCE_PASSWORD
