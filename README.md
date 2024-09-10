@@ -70,3 +70,7 @@ Once deployed, the backend will be accessible at:
 
 
 http://backend.watchworth.com
+
+hosted on redhat openshift k8s:
+
+https://watchworth-backend-sudeepcv007-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/

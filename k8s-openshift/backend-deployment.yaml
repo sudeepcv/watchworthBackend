@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: watchworth-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: watchworth-backend
+  template:
+    metadata:
+      labels:
+        app: watchworth-backend
+    spec:
+      containers:
+        - name: watchworth-backend
+          image: cvsudeep/watchworthbackend:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DATASOURCE_URL
+              value: jdbc:h2:mem:watchworth;DB_CLOSE_ON_EXIT=FALSE
+            - name: DATASOURCE_USERNAME
+              value: sa
+            - name: DATASOURCE_PASSWORD
+              value: ""
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
