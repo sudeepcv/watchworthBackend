@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: watchworth-backend
 spec:
-  replicas: 1
+  replicas: 2  # Ensures at least one pod is running
   selector:
     matchLabels:
       app: watchworth-backend
@@ -24,6 +24,18 @@ spec:
               value: sa
             - name: DATASOURCE_PASSWORD
               value: ""
+          readinessProbe:  
+            httpGet:
+              path: /  
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          livenessProbe:  
+            httpGet:
+              path: /  
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 20
           resources:
             requests:
               memory: "256Mi"
