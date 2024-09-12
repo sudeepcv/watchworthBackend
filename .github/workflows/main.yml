@@ -1,0 +1,40 @@
+name: Deploy to OpenShift Sandbox
+
+on:
+  push:
+    branches:
+      - main  # Deploy when there's a push to the main branch
+
+  schedule:
+    - cron: "*/2 * * * *"  # Deploy every 2 minutes (for testing)
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install OpenShift CLI
+      run: |
+        curl -LO https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/linux/oc.tar.gz
+        tar -xvzf oc.tar.gz
+        sudo mv oc /usr/local/bin/
+
+    - name: Log in to OpenShift
+      env:
+        OPENSHIFT_API_TOKEN: ${{ secrets.OPENSHIFT_API_TOKEN }}
+      run: |
+        oc login --token=$OPENSHIFT_API_TOKEN --server=https://api.sandbox.openshift.com:6443
+
+    - name: Deploy to OpenShift
+      run: |
+        oc project watchworth-backend  # Set your OpenShift project namespace
+        oc apply -f k8s-openshift/backend-deployment.yaml  # Apply deployment manifest
+        oc apply -f k8s-openshift/backend-service.yaml     # Apply service manifest
+        oc apply -f k8s-openshift/Route.yaml               # Apply route for external access
+
+    - name: Verify deployment
+      run: |
+        oc rollout status deployment/watchworth-backend
