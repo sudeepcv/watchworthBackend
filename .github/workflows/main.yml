@@ -35,7 +35,7 @@ jobs:
 
     - name: Set OpenShift Project
       run: |
-        oc project watchworth-backend  # Replace this with your actual OpenShift project namespace
+        oc project sudeepcv007-dev  # Replace this with your actual OpenShift project namespace
 
     - name: Deploy to OpenShift
       run: |
