@@ -13,8 +13,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v3
+
+    - name: Set up Node.js 20
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
 
     - name: Install OpenShift CLI
       run: |
@@ -24,17 +29,20 @@ jobs:
 
     - name: Log in to OpenShift
       env:
-        OPENSHIFT_API_TOKEN: ${{ secrets.OPENSHIFT_API_TOKEN }}
+        OPENSHIFT_API_TOKEN: ${{ secrets.OPENSHIFT_API_TOKEN }}  # Your OpenShift API Token stored in repository secrets
       run: |
         oc login --token=$OPENSHIFT_API_TOKEN --server=https://api.sandbox.openshift.com:6443
 
+    - name: Set OpenShift Project
+      run: |
+        oc project watchworth-backend  # Replace this with your actual OpenShift project namespace
+
     - name: Deploy to OpenShift
       run: |
-        oc project watchworth-backend  # Set your OpenShift project namespace
-        oc apply -f k8s-openshift/backend-deployment.yaml  # Apply deployment manifest
-        oc apply -f k8s-openshift/backend-service.yaml     # Apply service manifest
-        oc apply -f k8s-openshift/Route.yaml               # Apply route for external access
+        oc apply -f k8s-openshift/backend-deployment.yaml  # Apply the deployment manifest
+        oc apply -f k8s-openshift/backend-service.yaml     # Apply the service manifest
+        oc apply -f k8s-openshift/Route.yaml               # Apply the route for external access
 
-    - name: Verify deployment
+    - name: Verify Deployment Rollout
       run: |
         oc rollout status deployment/watchworth-backend
