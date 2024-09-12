@@ -31,7 +31,7 @@ jobs:
       env:
         OPENSHIFT_API_TOKEN: ${{ secrets.OPENSHIFT_API_TOKEN }}  # Your OpenShift API Token stored in repository secrets
       run: |
-        oc login --token=$OPENSHIFT_API_TOKEN --server=https://api.sandbox.openshift.com:6443
+        oc login --token=$OPENSHIFT_API_TOKEN --server=https://api.sandbox-m3.1530.p1.openshiftapps.com:6443
 
     - name: Set OpenShift Project
       run: |
