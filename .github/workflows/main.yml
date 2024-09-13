@@ -40,7 +40,7 @@ jobs:
     - name: Build Docker Image for Multiple Architectures
       run: |
         docker buildx create --use
-        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_USERNAME }}/watchworth-backend:latest . --push
+        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_USERNAME }}/watchworthbackend:latest . --push
       env:
         DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}  # Your Docker Hub username
         DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}  # Your Docker Hub access token stored in repository secrets
