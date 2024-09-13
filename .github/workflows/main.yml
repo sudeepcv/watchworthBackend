@@ -37,6 +37,18 @@ jobs:
       run: |
         oc project sudeepcv007-dev  # Replace this with your actual OpenShift project namespace
 
+    - name: Build Docker Image for Multiple Architectures
+      run: |
+        docker buildx create --use
+        docker buildx build --platform linux/amd64,linux/arm64 -t ${{ secrets.DOCKERHUB_USERNAME }}/watchworth-backend:latest . --push
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}  # Your Docker Hub username
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}  # Your Docker Hub access token stored in repository secrets
+
+    - name: Log in to Docker Hub
+      run: |
+        echo $DOCKERHUB_TOKEN | docker login -u $DOCKERHUB_USERNAME --password-stdin
+
     - name: Deploy to OpenShift
       run: |
         oc apply -f k8s-openshift/backend-deployment.yaml  # Apply the deployment manifest
