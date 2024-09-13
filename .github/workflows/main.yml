@@ -37,6 +37,13 @@ jobs:
       run: |
         oc project sudeepcv007-dev  # Replace this with your actual OpenShift project namespace
 
+    - name: Log in to Docker Hub
+      run: |
+        echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}        
+
     - name: Build Docker Image for Multiple Architectures
       run: |
         docker buildx create --use
