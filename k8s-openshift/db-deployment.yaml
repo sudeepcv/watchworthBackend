@@ -21,11 +21,11 @@ spec:
             - containerPort: 5432
           env:
             - name: POSTGRES_DB
-              value: "ps_db"
+              value: ps_db
             - name: POSTGRES_USER
-              value: "root"
+              value: root
             - name: POSTGRES_PASSWORD
-              value: "root"
+              value: root
             - name: PGDATA
               value: "/var/lib/postgresql/data/pgdata" 
           volumeMounts:
