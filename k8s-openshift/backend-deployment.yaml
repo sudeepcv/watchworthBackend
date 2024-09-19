@@ -19,7 +19,7 @@ spec:
             - containerPort: 8080
           env:
             - name: DATASOURCE_URL
-              value: jdbc:postgresql://postgres:5432/ps_db
+              value: jdbc:postgresql://postgres.sudeepcv007-dev.svc.cluster.local:5432/ps_db
             - name: DATASOURCE_USERNAME
               value: root
             - name: DATASOURCE_PASSWORD
