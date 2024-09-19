@@ -70,6 +70,12 @@ Once deployed, the backend will be accessible at:
 
 
 http://backend.watchworth.com
+you need to install ingress-nginx
+```bash
+helm upgrade --install ingress-nginx ingress-nginx \
+  --repo https://kubernetes.github.io/ingress-nginx \
+  --namespace ingress-nginx --create-namespace
+```
 
 hosted on redhat openshift k8s:
 

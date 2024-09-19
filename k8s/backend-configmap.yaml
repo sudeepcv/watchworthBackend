@@ -4,5 +4,6 @@ metadata:
   name: watchworth-backend-config
   namespace: default
 data:
-  DATASOURCE_URL: "jdbc:h2:~/watchworth"
-  DATASOURCE_USERNAME: "sa"
+  DATASOURCE_URL: "jdbc:postgresql://postgres:5432/ps_db"
+  POSTGRES_USER: root
+  POSTGRES_DB: ps_db

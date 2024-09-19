@@ -19,11 +19,11 @@ spec:
             - containerPort: 8080
           env:
             - name: DATASOURCE_URL
-              value: jdbc:h2:mem:watchworth;DB_CLOSE_ON_EXIT=FALSE
+              value: jdbc:postgresql://postgres:5432/ps_db
             - name: DATASOURCE_USERNAME
-              value: sa
+              value: root
             - name: DATASOURCE_PASSWORD
-              value: ""
+              value: root
           readinessProbe:  
             httpGet:
               path: /  

@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: watchworth-backend
-  namespace: default
 spec:
   replicas: 1
   selector:
@@ -16,7 +15,7 @@ spec:
       containers:
         - name: watchworth-backend
           image: cvsudeep/watchworthbackend:latest
-#          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
           env:
@@ -24,14 +23,14 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: watchworth-backend-config
-                  key: DATASOURCE_URL
+                  key: DATASOURCE_URL  # Reference the ConfigMap for DB URL
             - name: DATASOURCE_USERNAME
               valueFrom:
                 configMapKeyRef:
                   name: watchworth-backend-config
-                  key: DATASOURCE_USERNAME
+                  key: POSTGRES_USER  # Reference the ConfigMap for DB username
             - name: DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: watchworth-backend-secret
-                  key: DATASOURCE_PASSWORD
+                  key: POSTGRES_PASSWORD  # Reference the Secret for DB password
