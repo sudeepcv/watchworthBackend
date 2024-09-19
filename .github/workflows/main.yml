@@ -52,6 +52,7 @@ jobs:
       run: |
         oc apply -f k8s-openshift/db-pvc.yaml
         oc apply -f k8s-openshift/db-deployment.yaml
+        oc apply -f k8s-openshift/db-service.yaml
         oc apply -f k8s-openshift/backend-deployment.yaml  # Apply the deployment manifest
         oc apply -f k8s-openshift/backend-service.yaml     # Apply the service manifest
         oc apply -f k8s-openshift/Route.yaml               # Apply the route for external access

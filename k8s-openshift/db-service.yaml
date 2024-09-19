@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: sudeepcv007-dev
+spec:
+  ports:
+    - port: 5432
+  selector:
+    app: postgres
+  type: ClusterIP  # Can also be LoadBalancer or NodePort based on your requirements
